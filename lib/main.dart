@@ -8,18 +8,25 @@ import 'package:english_words/english_words.dart';
 import 'nav_drawer.dart';
 
 
+
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Startup NAme Generator',
+      color: Colors.red,
+      debugShowCheckedModeBanner: false,
       home : RandomWords(),
+      // routes: <String ,WidgetBuilder>{
+      //   '/screenone' : (BuildContext context) => ScreenOne(value: null, flag : 'M'),
+      // },
     );
   }
 }

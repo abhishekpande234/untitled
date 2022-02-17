@@ -5,6 +5,8 @@ import 'second_route.dart';
 import 'alertDialog.dart';
 import 'card.dart';
 import 'parent_widget_page.dart';
+import 'screen_one.dart';
+// import 'screen_two.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key}) : super(key: key);
@@ -63,6 +65,17 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.add_alert),
             title: const Text('Inter Widget Communication '),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ScreenOne(value: null,flag: 'N',)),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_alert),
+            title: const Text('IWC F(x) '),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

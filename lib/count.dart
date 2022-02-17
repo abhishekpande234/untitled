@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
-import 'parent_widget_page.dart';
+
 
 class Count extends StatelessWidget {
   final int num;
-  Count(this.num);
+  // final VoidCallback onCountSelected;
+  final Function(int) onCountChange;
+
+    const Count({required this.num, required this.onCountChange});
+
 
 
 
 
   @override
   Widget build(BuildContext context) {
-    return  Text("$num");
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        IconButton(onPressed: onCountChange(1), icon: const Icon(Icons.arrow_back)),
+          Text("$num"),
+          // onPressed: ()=> onCountSelected(),
+        // ),
+        IconButton(onPressed: onCountChange(-1), icon: const Icon(Icons.arrow_forward)),
+      ],
+    );
   }
 }
 
