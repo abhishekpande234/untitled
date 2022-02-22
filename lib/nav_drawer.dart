@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/master_form.dart';
 import 'package:untitled/second_route.dart';
 
 import 'second_route.dart';
@@ -6,6 +7,9 @@ import 'alertDialog.dart';
 import 'card.dart';
 import 'parent_widget_page.dart';
 import 'screen_one.dart';
+
+import 'master_form.dart';
+
 // import 'screen_two.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -69,7 +73,7 @@ class NavDrawer extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ScreenOne(value: null,flag: 'N',)),
+                MaterialPageRoute(builder: (context) => ScreenOne(value: null,flag: 'N')),
               );
             },
           ),
@@ -81,6 +85,28 @@ class NavDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ParentWidget()),
+              );
+            },
+          ),
+          /*ListTile(
+            leading: const Icon(Icons.add_alert),
+            title: const Text('SnackBar'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SnackBarPage()),
+              );
+            },
+          ),*/
+          ListTile(
+            leading: const Icon(Icons.add_alert),
+            title: const Text('Master Form'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MasterForm()),
               );
             },
           ),

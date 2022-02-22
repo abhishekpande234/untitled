@@ -2,7 +2,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
+
 class SecondRoute extends StatelessWidget {
+
   const SecondRoute({Key? key}) : super(key: key);
 
   @override
@@ -16,6 +18,7 @@ class SecondRoute extends StatelessWidget {
           body:
           Column(
             children: [
+
               const Padding(
                 padding: EdgeInsets.all(15.0),
                 child: MyCustomForm(),
@@ -68,16 +71,15 @@ class _MyCustomFormState extends State<MyCustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children:<Widget>[
           TextFormField(
-
             decoration: const InputDecoration(
               hintText: 'Enter the number',
             ),
             validator: (value){
-              if(value?.isEmpty??true){
+              if(value!.isEmpty){
                 text = 'Please enter valid number';
                 return text;
               }
-              return null;
+              return 'null';
             },
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

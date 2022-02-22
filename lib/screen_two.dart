@@ -1,77 +1,46 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'screen_one.dart';
 
 //import 'screen_one.dart';
 
-// class ScreenTwo extends StatefulWidget {
-//   static ValueNotifier<int> counter = ValueNotifier<int>(0);
-//   @override
-//   State<ScreenTwo> createState() => _ScreenTwoState();
-// }
-//
-// class _ScreenTwoState extends State<ScreenTwo> {
-//
-//   //final int num;
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           leading: IconButton( icon: const Icon(Icons.arrow_back), onPressed: () { Navigator.of(context).pop(); },),
-//           title: const Text('Screen Two'),
-//         ),
-//         body:
-//         Column(
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(20.0),
-//               child: Center(
-//                 child: Column(
-//                   children: [
-//                     Row(
-//                       children: <Widget> [
-//                         IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back)),
-//                         ValueListenableBuilder(
-//                             valueListenable: counter,
-//                             builder: (BuildContext context, count , child){
-//                               return Text('$count');
-//                             }),
-//                         IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_forward)),
-//                       ],
-//                     ) ,
-//                     ElevatedButton(
-//                       child: const Text('Goto Screen One'),
-//                       onPressed: (){
-//                         Navigator.pop(context);
-//
-//                       },
-//
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
 class ScreenTwo extends StatefulWidget {
+
   static ValueNotifier<int> counter = ValueNotifier<int>(0);
-
-
   // ScreenTwo({key key});
-
   @override
   State<ScreenTwo> createState() => _ScreenTwoState();
 }
 
 class _ScreenTwoState extends State<ScreenTwo> {
   int sum = ScreenTwo.counter.value;
+  int prevVal = ScreenTwo.counter.value;
+
+  // int gettersum()
+  // {
+  //   return sum;
+  // }
+  mySnackBar(BuildContext context){
+    final snackBar = SnackBar(
+      content: const Text('Hey! This is a SnackBar message.'),
+      duration: const Duration(seconds: 2),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {
+          sum = prevVal;
+        },
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  // void actionSnackBar(BuildContext context, int index){
+  //   setState((){
+  //     sum = prevVal;
+  //   });
+  // }
 
   void showToast(){
     Fluttertoast.showToast(
@@ -80,6 +49,15 @@ class _ScreenTwoState extends State<ScreenTwo> {
         gravity: ToastGravity.BOTTOM,
         backgroundColor: Colors.blue,
         textColor: Colors.black
+    );
+  }
+
+  navigateToScreenOne(){
+    return Timer(
+        const Duration(seconds:2),
+            () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => ScreenOne (value : sum , flag : 'S')))
     );
   }
 
@@ -98,33 +76,46 @@ class _ScreenTwoState extends State<ScreenTwo> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: <Widget> [
-                          IconButton(onPressed: (){ScreenTwo.counter.value -= 1; sum = ScreenTwo.counter.value ;}, icon: const Icon(Icons.arrow_back)),
-                          ValueListenableBuilder(
-                              valueListenable: ScreenTwo.counter,
-                              builder: (BuildContext context, count , child){
-                                return Text('$count');
+                child: Column(
+                  children: [
+                    Row(
+                      children: <Widget> [
+                        IconButton(onPressed: (){ScreenTwo.counter.value -= 1; sum = ScreenTwo.counter.value ;}, icon: const Icon(Icons.arrow_back)),
+                        ValueListenableBuilder(
+                            valueListenable: ScreenTwo.counter,
+                            builder: (BuildContext context, count , child){
+                              return Text('$count');
 
-                              }),
-                          IconButton(onPressed: (){ScreenTwo.counter.value += 1; sum = ScreenTwo.counter.value ;}, icon: const Icon(Icons.arrow_forward)),
-                        ],
-                      ) ,
-                      // Text("$num"),
-                      ElevatedButton(
-                        child: const Text('Goto Screen One'),
-                        onPressed: (){
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (BuildContext context) => ScreenOne (value : sum , flag : 'S'))
-                          );
-                          showToast();
-                        },
-                      ),
-                    ],
-                  ),
+                            }),
+                        IconButton(onPressed: (){ScreenTwo.counter.value += 1; sum = ScreenTwo.counter.value ;}, icon: const Icon(Icons.arrow_forward)),
+                      ],
+                    ) ,
+                    // Text("$num"),
+                    ElevatedButton(
+                      child: const Text('Goto Screen One'),
+                      onPressed: (){
+                        navigateToScreenOne();
+                        mySnackBar(context);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(builder: (BuildContext context) => ScreenOne (value : sum , flag : 'S'))
+                        // );
+
+                        // showToast();
+                      },
+                    ),
+
+                    // ElevatedButton(
+                    //   child: const Text('View Snackbar'),
+                    //   onPressed: (){
+                    //     mySnackBar(context);
+                    //   },
+                    // ),
+
+                    SnackBarClass(),
+
+                  ],
+                ),
 
               ),
             ],
@@ -135,62 +126,36 @@ class _ScreenTwoState extends State<ScreenTwo> {
   }
 }
 
-// class ScreenTwo extends StatelessWidget {
-//   static ValueNotifier<int> counter = ValueNotifier<int>(0);
-//   int num;
-//   final Function callback;
-//   ScreenTwo({Key? key, required this.num, required this.callback }) : super(key: key);
-//   int sum = ScreenTwo.counter.value;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           leading: IconButton( icon: const Icon(Icons.arrow_back), onPressed: () { Navigator.of(context).pop(); },),
-//           title: const Text('Screen Two'),
-//         ),
-//         body:
-//         Column(
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(20.0),
-//               child: Center(
-//                 child: Column(
-//                   children: [
-//                     Row(
-//                       children: <Widget> [
-//                         IconButton(onPressed: (){ScreenTwo.counter.value -= 1; sum = ScreenTwo.counter.value ;}, icon: const Icon(Icons.arrow_back)),
-//                         ValueListenableBuilder(
-//                             valueListenable: ScreenTwo.counter,
-//                             builder: (BuildContext context, count , child){
-//                               return Text('$count');
-//
-//                             }),
-//                         IconButton(onPressed: (){ScreenTwo.counter.value += 1; sum = ScreenTwo.counter.value ;}, icon: const Icon(Icons.arrow_forward)),
-//                       ],
-//                     ) ,
-//                     // Text("$num"),
-//                     ElevatedButton(
-//                       child: const Text('Goto Screen One'),
-//                       onPressed: (){
-//                         callback(sum);
-//                         Navigator.pushReplacement(
-//                           context,
-//                           MaterialPageRoute(builder: (context) =>  ScreenOne(sum)),
-//                         );
-//
-//                       },
-//                     ),
-//                     Text("${ScreenTwo.counter}.value"),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+
+
+
+mySnackBar(BuildContext context){
+  final snackBar = SnackBar(
+    content: const Text('Hey! This is a SnackBar message.'),
+    duration: const Duration(seconds: 5),
+    action: SnackBarAction(
+      label: 'Undo',
+      onPressed: () {
+        // Some code to undo the change.
+
+      },
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+class SnackBarClass extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        child: const Text('Show SnackBar'),
+        onPressed: () {
+          mySnackBar(context);
+        },
+      ),
+    );
+  }
+}
+
 

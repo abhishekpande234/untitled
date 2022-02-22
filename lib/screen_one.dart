@@ -8,7 +8,7 @@ class ScreenOne extends StatefulWidget {
   int? value;
   String flag;
 
-  ScreenOne({required this .value,required this.flag});
+  ScreenOne({Key? key, required this .value,required this.flag}) : super(key: key);
 
   @override
   State<ScreenOne> createState() => _ScreenOneState();
@@ -63,7 +63,7 @@ class _ScreenOneState extends State<ScreenOne> {
                         ScreenTwo.counter.value = num;
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) =>  ScreenTwo()
+                          MaterialPageRoute(builder: (context) =>  Scaffold(body : ScreenTwo())
                           ),
                         );
                         showToast();
